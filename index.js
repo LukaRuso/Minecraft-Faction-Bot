@@ -24,7 +24,6 @@ let options = {
 var bot = mineflayer.createBot(options);
 
 bot.loadPlugin(tpsPlugin);
-bot.setMaxListeners(30);
 
 client.on("ready", async => {
     console.log("Logged in as " + client.user.tag);
