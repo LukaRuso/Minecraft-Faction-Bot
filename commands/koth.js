@@ -3,24 +3,16 @@ const config = require("../config.json")
 module.exports = {
     name: 'koth',
     description: 'koth',
-    execute(message, args, bot) {
+    execute(message, args, bot, chatData, saving, regex) {
         try {
             
-            let regex = /\bkoth\b/i;
-            let sending = false;
-            let chatData = [];
+            saving.bool = true;
+            regex.regex = /\bkoth\b/i;
 
-            if (!args.length) args[0] = "";
             bot.chat(`/koth`)
 
-            bot.on("message", msg => {
-                let parsedMsg = `${msg}`;
-                if (parsedMsg.match(regex)){
-                    chatData.push(`${msg}`);
-                }
-            })
-
             setTimeout(() => {
+                saving.bool = false
                 if (!chatData.length) {
                     chatData[0] = "Try Again";
                 }

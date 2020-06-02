@@ -8,6 +8,9 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
 var prefix = config.prefix;
+let chatData = [];
+let saving = { bool: false };
+let regex = { regex: new RegExp() };
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
@@ -37,8 +40,12 @@ bot.on("Kicked", async => {
     bot = mineflayer.createBot(options);
 })
 
-bot.on("message", message => {
-    console.log(`${message}`);
+bot.on("message", msg => {
+    console.log(`${msg}`);
+    let parsedMsg = `${msg}`;
+    if (parsedMsg.match(regex.regex) && !parsedMsg.includes("(!) Vanity") && saving.bool === true) {
+        chatData.push(`${msg}`);
+    }
 });
 
 client.on('message', message => {
@@ -58,7 +65,7 @@ client.on('message', message => {
     }
 
     try {
-        command.execute(message, args, bot);
+        command.execute(message, args, bot, chatData, saving, regex);
         message.delete();
     } catch (err) {
         message.channel.send(`\`\`\`${err}\`\`\``).then(msg => {

@@ -4,24 +4,16 @@ module.exports = {
     name: 'rpost',
     aliases: ['raidingoutpost', 'raidingpost'],
     description: 'rpost',
-    execute(message, args, bot) {
+    execute(message, args, bot, chatData, saving, regex) {
         try {
             
-            let regex = /\braiding outpost\b/i;
-            let sending = false;
-            let chatData = [];
+            saving.bool = true;
+            regex.regex = /\braiding outpost\b/i;
 
-            if (!args.length) args[0] = "";
             bot.chat(`/rpost`)
 
-            bot.on("message", msg => {
-                let parsedMsg = `${msg}`;
-                if (parsedMsg.match(regex)){
-                    chatData.push(`${msg}`);
-                }
-            })
-
             setTimeout(() => {
+                saving.bool = false;
                 if (!chatData.length) {
                     chatData[0] = "Try Again";
                 }

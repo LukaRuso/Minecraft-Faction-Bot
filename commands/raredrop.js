@@ -4,31 +4,16 @@ module.exports = {
     name: 'raredrop',
     aliases: ['td', 'treasuredrop'],
     description: 'raredrop',
-    execute(message, args, bot) {
+    execute(message, args, bot, chatData, saving, regex) {
         try {
             
-            let startArgs = ["-----"];
-            let endArgs = ["-----"];
-            let chatData = [];
-            let sending = false;
+            saving.bool = true;
+            regex.regex = /\bdrop\b|\blocation\b|\btype\b/i;
 
             bot.chat("/td");
 
-            bot.on("message", msg => {
-                let parsedMsg = `${msg}`;
-                if (new RegExp(startArgs.join("|")).test(parsedMsg) && sending === false) {
-                    chatData.push(`${msg}`);
-                    sending = true;
-                }
-                else if (new RegExp(endArgs.join("|")).test(parsedMsg)){
-                    sending = false;
-                }
-                else if (sending === true){
-                    chatData.push(`${msg}`);
-                }
-            })
-
             setTimeout(() => {
+                saving.bool = false;
                 if (!chatData.length) {
                     chatData[0] = "Try Again";
                 }

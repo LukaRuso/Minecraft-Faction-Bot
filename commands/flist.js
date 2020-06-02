@@ -3,31 +3,16 @@ const config = require("../config.json")
 module.exports = {
     name: 'flist',
     description: 'flist',
-    execute(message, args, bot) {
+    execute(message, args, bot, chatData, saving, regex) {
         try {
             
-            let startArgs = ["_____", "-----"];
-            let regex = /\//;
-            let chatData = [];
-            let sending = false;
+            saving.bool = true;
+            regex.regex = /\/|(\_)\1+|(\-)\1+|\bfactionless\b|\bonline.\b/i;
 
             bot.chat("/f list");
 
-            bot.on("message", msg => {
-                let parsedMsg = `${msg}`;
-                if ((new RegExp(startArgs.join("|")).test(parsedMsg) && sending === false) || parsedMsg.match(/\bfactionless\b|\bonline.\b/i)){
-                    chatData.push(`${msg}`);
-                    sending = true;
-                }
-                else if (!parsedMsg.match(regex) && sending === true){
-                    sending = false;
-                }
-                else if (sending === true){
-                    chatData.push(`${msg}`);
-                }
-            })
-
             setTimeout(() => {
+                saving.bool = false;
                 if (!chatData.length) {
                     chatData[0] = "Try Again";
                 }

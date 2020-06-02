@@ -3,31 +3,16 @@ const config = require("../config.json")
 module.exports = {
     name: 'ftop',
     description: 'ftop',
-    execute(message, args, bot) {
+    execute(message, args, bot, chatData, saving, regex) {
         try {
             
-            let startArgs = ["_____", "-----", "Faction"];
-            let endArgs = ["Data is cached", "Tracking", "-----", "DISCLAIMER"];
-            let chatData = [];
-            let sending = false;
+            saving.bool = true;
+            regex.regex = /\/|(\_)\1+|(\-)\1|^[1-9#]/i;
 
             bot.chat(config.FtopCommand);
 
-            bot.on("message", msg => {
-                let parsedMsg = `${msg}`;
-                if (new RegExp(startArgs.join("|")).test(parsedMsg) && sending === false) {
-                    chatData.push(`${msg}`);
-                    sending = true;
-                }
-                else if (new RegExp(endArgs.join("|")).test(parsedMsg) && !parsedMsg.charAt(0).match(/[1-9#]/)){
-                    sending = false;
-                }
-                else if (sending === true){
-                    chatData.push(`${msg}`);
-                }
-            })
-
             setTimeout(() => {
+                saving.bool = false;
                 if (!chatData.length) {
                     chatData[0] = "Try Again";
                 }

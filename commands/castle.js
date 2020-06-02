@@ -1,17 +1,15 @@
 const Discord = require("discord.js");
 const config = require("../config.json")
 module.exports = {
-    name: 'fshow',
-    aliases: ['show', 'fwho'],
-    description: 'fshow',
+    name: 'castle',
+    description: 'rpost',
     execute(message, args, bot, chatData, saving, regex) {
         try {
             
             saving.bool = true;
-            regex.regex = /[:|*+,-]|\bnone\b|(\_)\1+/i;
+            regex.regex = /^\bCastle\b|^\bControlled\b/i;
 
-            if (!args.length) args[0] = "";
-            bot.chat(`/f show ${args[0]}`)
+            bot.chat(`/castle`)
 
             setTimeout(() => {
                 saving.bool = false;
@@ -24,7 +22,7 @@ module.exports = {
                 message.channel.send(embedFshow);
                 chatData.length = 0;
 
-            }, 750);
+            }, 500);
         } catch (error) {
             console.log(error);
         }
