@@ -1,0 +1,14 @@
+{
+    "email" : "",
+    "password" : "",
+    "token" : "",
+
+    "serverVersion" : "1.8",
+    "serverIP" : "play.vanitymc.co",
+
+    "realmCommand" : "/heroic",
+    "FtopCommand" : "/f top",
+
+    "prefix" : ".",
+    "embedColor" : "#fce803"
+}
