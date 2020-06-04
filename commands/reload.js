@@ -1,6 +1,9 @@
+const config = require('../config.json')
+const fs = require('fs');
 module.exports = {
 	name: 'reload',
 	description: 'Reloads a command',
+	enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.reload,
 	execute(message, args, bot, sending, chatData, startArg, endArgs) {
 		try {
 			if (!args.length) return message.channel.send(`You didn't pass any command to reload, ${message.author}!`)
@@ -29,10 +32,6 @@ module.exports = {
 					}, 3000));
 			}
 
-			message.channel.send(`Command \`${command.name}\` was reloaded!`).then(msg => {
-				console.log(`Command \`${command.name}\` was reloaded!`)
-				msg.delete({ timeout: 3000 })
-			});
 		} catch (error) {
 			console.log(error);
 		}

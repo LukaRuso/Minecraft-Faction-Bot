@@ -1,11 +1,13 @@
-const Discord = require("discord.js");
-const config = require("../config.json")
+const nodemon = require('nodemon');
+const fs = require('fs');
 module.exports = {
     name: 'restart',
-    description: 'restart',
-    execute(message, args, bot) {
+    aliases: ['rs'],
+    description: 'rpost',
+    enabled: true,
+    execute(message, args, bot, chatData, saving, regex) {
         try {
-            process.exit(1);
+            nodemon.restart();
         } catch (error) {
             console.log(error);
         }

@@ -1,6 +1,9 @@
+const config = require('../config.json')
+const fs = require('fs');
 module.exports = {
     name: 'purge',
     description: 'runcmd [message]',
+    enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.purge,
     execute(message, args, bot, sending, chatData, startArg, endArgs) {
         try {
             let amount;

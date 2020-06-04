@@ -1,9 +1,11 @@
 const Discord = require("discord.js");
 const config = require("../config.json")
+const fs = require('fs');
 module.exports = {
     name: 'raredrop',
     aliases: ['td', 'treasuredrop'],
     description: 'raredrop',
+    enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.raredrop,
     execute(message, args, bot, chatData, saving, regex) {
         try {
             

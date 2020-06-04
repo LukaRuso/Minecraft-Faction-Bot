@@ -1,8 +1,10 @@
 const Discord = require("discord.js");
 const config = require("../config.json")
+const fs = require('fs');
 module.exports = {
     name: 'sudo',
     description: 'sudo [message]',
+    enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.sudo,
     execute(message, args, bot) {
         try {
             let chatData = [];

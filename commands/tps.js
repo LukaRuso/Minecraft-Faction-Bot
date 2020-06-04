@@ -1,10 +1,13 @@
 const mineflayer = require('mineflayer')
 const Discord = require("discord.js");
-const config = require("../config.json")
+const fs = require('fs');
+let config = JSON.parse(fs.readFileSync('./config.json'));
+
 
 module.exports = {
     name: 'tps',
     description: 'tps',
+    enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.tps,
     execute(message, args, bot) {
         try {
             let embedFshow = new Discord.MessageEmbed()

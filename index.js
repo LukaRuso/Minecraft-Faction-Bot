@@ -50,6 +50,8 @@ bot.on("message", msg => {
 
 client.on('message', message => {
 
+    
+
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -65,8 +67,10 @@ client.on('message', message => {
     }
 
     try {
-        command.execute(message, args, bot, chatData, saving, regex);
-        message.delete();
+        if (command.enabled == true) {
+            command.execute(message, args, bot, chatData, saving, regex);
+            message.delete();
+        }
     } catch (err) {
         message.channel.send(`\`\`\`${err}\`\`\``).then(msg => {
             msg.delete({ timeout: 3000 })

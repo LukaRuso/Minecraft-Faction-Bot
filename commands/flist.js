@@ -1,8 +1,10 @@
 const Discord = require("discord.js");
 const config = require("../config.json")
+const fs = require('fs');
 module.exports = {
     name: 'flist',
     description: 'flist',
+    enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.flist,
     execute(message, args, bot, chatData, saving, regex) {
         try {
             
