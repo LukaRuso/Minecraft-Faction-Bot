@@ -2,12 +2,12 @@ const fs = require("fs");
 const Discord = require('discord.js');
 const mineflayer = require('mineflayer');
 const tpsPlugin = require('mineflayer-tps')(mineflayer)
-const config = require("./config.json")
+let config = JSON.parse(fs.readFileSync('./config.json'))
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
-var prefix = config.prefix;
+var prefix = { value: config.prefix };
 let chatData = [];
 let saving = { bool: false };
 let regex = { regex: new RegExp() };
@@ -50,11 +50,9 @@ bot.on("message", msg => {
 
 client.on('message', message => {
 
-    
+    if (!message.content.startsWith(prefix.value) || message.author.bot) return;
 
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
-
-    const args = message.content.slice(prefix.length).split(/ +/);
+    const args = message.content.slice(prefix.value.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
 
     const command = client.commands.get(commandName)

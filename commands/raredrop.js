@@ -19,10 +19,11 @@ module.exports = {
                 if (!chatData.length) {
                     chatData[0] = "Try Again";
                 }
-                let embedFtop = new Discord.MessageEmbed()
+                let embedRaredrop = new Discord.MessageEmbed()
+                    .setTitle("Rare Drop Information")
                     .setColor(config.embedColor)
                     .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
-                message.channel.send(embedFtop);
+                message.channel.send(embedRaredrop);
                 chatData.length = 0;
             }, 250);
 

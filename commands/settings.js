@@ -9,7 +9,7 @@ module.exports = {
     execute(message, args, bot) {
         try {
             let option;
-            let changed = false;
+            let changed = false, reload = false;
             if (!args.length) {
                 args[0] = "";
             }
@@ -31,6 +31,7 @@ module.exports = {
                             message.channel.send(embed).then(msg => msg.delete({ timeout: 5000 }));
                             config.enableCommands[option] = true;
                             changed = true;
+                            reload = true;
 
                         }
                         else {
@@ -63,6 +64,7 @@ module.exports = {
                         message.channel.send(embed).then(msg => msg.delete({ timeout: 5000 }));
                         config.enableCommands[option] = false;
                         changed = true;
+                        reload = true;
                     }
                     else {
                         let embed = new Discord.MessageEmbed()
@@ -94,6 +96,15 @@ module.exports = {
                         .setColor(config.embedColor)
                     message.channel.send(embed).then(msg => msg.delete({ timeout: 10000 }));
                 } break;
+                case "prefix": {
+                    for (element in config){
+                        if (element == "prefix"){
+                            config[element] = args[1];
+                            changed = true;
+                            require('../index').prefix.value = args[1];
+                        }
+                    }
+                }break;
 
                 default: {
                     message.channel.send("err");
@@ -101,8 +112,11 @@ module.exports = {
             }
             if (changed) {
                 fs.writeFileSync('./config.json', JSON.stringify(config, null, 2))
-                let command = [option];
-                require('./reload').execute(message, command);
+                if (reload) {
+                    let command = [option];
+                    require('./reload').execute(message, command);
+                }
+
             }
 
         } catch (error) {

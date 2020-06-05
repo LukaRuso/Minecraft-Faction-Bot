@@ -19,10 +19,11 @@ module.exports = {
                 if (!chatData.length) {
                     chatData[0] = "Try Again";
                 }
-                let embedFshow = new Discord.MessageEmbed()
+                let embedRpost = new Discord.MessageEmbed()
+                    .setTitle("Raiding Outpost Information")
                     .setColor(config.embedColor)
                     .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
-                message.channel.send(embedFshow);
+                message.channel.send(embedRpost);
                 chatData.length = 0;
 
             }, 500);

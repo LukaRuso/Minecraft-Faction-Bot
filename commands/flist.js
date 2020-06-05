@@ -9,7 +9,7 @@ module.exports = {
         try {
             
             saving.bool = true;
-            regex.regex = /\/|(\_)\1+|(\-)\1+|\bfactionless\b|\bonline.\b/i;
+            regex.regex = /\bfactionless\b|\bonline\b/i;
 
             bot.chat("/f list");
 
@@ -18,10 +18,11 @@ module.exports = {
                 if (!chatData.length) {
                     chatData[0] = "Try Again";
                 }
-                let embedFtop = new Discord.MessageEmbed()
+                let embedFlist = new Discord.MessageEmbed()
+                    .setTitle("Faction list")
                     .setColor(config.embedColor)
                     .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
-                message.channel.send(embedFtop);
+                message.channel.send(embedFlist);
                 chatData.length = 0;
             }, 500);
 

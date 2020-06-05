@@ -18,10 +18,11 @@ module.exports = {
                 if (!chatData.length) {
                     chatData[0] = "Try Again";
                 }
-                let embedFshow = new Discord.MessageEmbed()
+                let embedKoth = new Discord.MessageEmbed()
+                    .setTitle("Koth Information")
                     .setColor(config.embedColor)
                     .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
-                message.channel.send(embedFshow);
+                message.channel.send(embedKoth);
                 chatData.length = 0;
             }, 500);
         } catch (error) {

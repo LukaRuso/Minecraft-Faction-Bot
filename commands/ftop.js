@@ -9,7 +9,7 @@ module.exports = {
         try {
             
             saving.bool = true;
-            regex.regex = /\/|(\_)\1+|(\-)\1|^[1-9#]/i;
+            regex.regex = /^[1-9#]/i;
 
             bot.chat(config.FtopCommand);
 
@@ -19,6 +19,7 @@ module.exports = {
                     chatData[0] = "Try Again";
                 }
                 let embedFtop = new Discord.MessageEmbed()
+                    .setTitle("Faction Top")
                     .setColor(config.embedColor)
                     .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
                 message.channel.send(embedFtop);

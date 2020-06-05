@@ -18,10 +18,11 @@ module.exports = {
                 if (!chatData.length) {
                     chatData[0] = "Try Again";
                 }
-                let embedFshow = new Discord.MessageEmbed()
+                let embedCastle = new Discord.MessageEmbed()
+                    .setTitle("Castle Information")
                     .setColor(config.embedColor)
                     .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
-                message.channel.send(embedFshow);
+                message.channel.send(embedCastle);
                 chatData.length = 0;
 
             }, 500);

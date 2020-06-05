@@ -21,10 +21,10 @@ module.exports = {
                 if (!chatData.length) {
                     chatData[0] = "Try Again";
                 }
-                let embedFtop = new Discord.MessageEmbed()
+                let embedSudo = new Discord.MessageEmbed()
                     .setColor(config.embedColor)
                     .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
-                message.channel.send(embedFtop);
+                message.channel.send(embedSudo);
                 chatData.length = 0;
             }, 500);
         } catch (error) {
