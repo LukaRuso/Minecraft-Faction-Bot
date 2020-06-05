@@ -1,12 +1,13 @@
 const mineflayer = require('mineflayer')
 const Discord = require("discord.js");
 const fs = require('fs');
-let config = JSON.parse(fs.readFileSync('./config.json'));
+const config = require('../config.json');
 
 
 module.exports = {
-    name: 'tps',
-    description: 'tps',
+    name: 'TPS',
+    aliases: ['tps'],
+    description: 'Shows current TPS of the server',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.tps,
     execute(message, args, bot) {
         try {

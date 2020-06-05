@@ -3,7 +3,7 @@ const config = require("../config.json")
 const fs = require('fs');
 module.exports = {
     name: 'ftop',
-    description: 'ftop',
+    description: 'Displays Faction Top Ranking',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.ftop,
     execute(message, args, bot, chatData, saving, regex) {
         try {

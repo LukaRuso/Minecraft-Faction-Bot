@@ -3,7 +3,7 @@ const fs = require('fs');
 module.exports = {
     name: 'restart',
     aliases: ['rs'],
-    description: 'rpost',
+    description: `Doesn't actually work`,
     enabled: true,
     execute(message, args, bot, chatData, saving, regex) {
         try {

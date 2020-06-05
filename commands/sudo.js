@@ -3,7 +3,7 @@ const config = require("../config.json")
 const fs = require('fs');
 module.exports = {
     name: 'sudo',
-    description: 'sudo [message]',
+    description: 'Will run specified command in game',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.sudo,
     execute(message, args, bot) {
         try {

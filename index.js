@@ -65,8 +65,12 @@ client.on('message', message => {
     }
 
     try {
-        if (command.enabled == true) {
+        if (command.enabled == true && command.name != "settings") {
             command.execute(message, args, bot, chatData, saving, regex);
+            message.delete();
+        }
+        else if (command.name == "settings"){
+            command.execute(message, args, prefix)
             message.delete();
         }
     } catch (err) {
