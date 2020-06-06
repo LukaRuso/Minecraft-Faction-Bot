@@ -4,6 +4,7 @@ const fs = require('fs');
 module.exports = {
     name: 'rpost',
     aliases: ['raidingoutpost', 'raidingpost'],
+    category: 'Factions',
     description: 'Displays information about Raiding Outpost',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.rpost,
     execute(message, args, bot, chatData, saving, regex) {

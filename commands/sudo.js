@@ -4,6 +4,7 @@ const fs = require('fs');
 module.exports = {
     name: 'sudo',
     description: 'Will run specified command in game',
+    category: "Bot",
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.sudo,
     execute(message, args, bot) {
         try {

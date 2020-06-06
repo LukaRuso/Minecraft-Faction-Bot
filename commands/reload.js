@@ -2,6 +2,7 @@ const config = require('../config.json')
 const fs = require('fs');
 module.exports = {
 	name: 'reload',
+	category: "Bot",
 	description: 'Reloads specified command',
 	enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.reload,
 	execute(message, args, bot, sending, chatData, startArg, endArgs) {

@@ -4,6 +4,7 @@ const fs = require('fs');
 module.exports = {
     name: 'fshow',
     aliases: ['show', 'fwho'],
+    category: 'Factions',
     description: 'Displays information about specified faction',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.fshow,
     execute(message, args, bot, chatData, saving, regex) {

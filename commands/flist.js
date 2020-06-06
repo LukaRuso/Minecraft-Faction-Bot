@@ -3,6 +3,7 @@ const config = require("../config.json")
 const fs = require('fs');
 module.exports = {
     name: 'flist',
+    category: 'Factions',
     description: 'Displays Factions List',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.flist,
     execute(message, args, bot, chatData, saving, regex) {

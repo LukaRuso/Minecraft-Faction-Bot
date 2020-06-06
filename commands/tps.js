@@ -7,6 +7,7 @@ const config = require('../config.json');
 module.exports = {
     name: 'TPS',
     aliases: ['tps'],
+    category: "Factions",
     description: 'Shows current TPS of the server',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.tps,
     execute(message, args, bot) {

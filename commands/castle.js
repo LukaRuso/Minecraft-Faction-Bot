@@ -3,6 +3,7 @@ const config = require("../config.json")
 const fs = require('fs');
 module.exports = {
     name: 'castle',
+    category: 'Factions',
     description: 'Displays information about Castle',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.castle,
     execute(message, args, bot, chatData, saving, regex) {

@@ -29,6 +29,7 @@ var bot = mineflayer.createBot(options);
 bot.loadPlugin(tpsPlugin);
 
 client.on("ready", async => {
+    client.guilds.cache.first().member(client.user.id).setNickname(`[${prefix.value}] ${client.guilds.cache.first().member(client.user.id).displayName.split(" ")[1]}`);
     console.log("Logged in as " + client.user.tag);
 });
 bot.on("login", async => {
@@ -48,8 +49,8 @@ bot.on("message", msg => {
     }
 });
 
-client.on('message', message => {
-
+client.on('message', message => {  
+    
     if (!message.content.startsWith(prefix.value) || message.author.bot) return;
 
     const args = message.content.slice(prefix.value.length).split(/ +/);

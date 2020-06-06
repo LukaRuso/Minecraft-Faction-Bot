@@ -4,7 +4,8 @@ let config = require('../config.json');
 
 module.exports = {
     name: 'settings',
-    description: 'Displays this menu',
+    description: 'Show and modify settings',
+    category: "Bot",
     enabled: true,
     execute(message, args, prefix) {
         try {
@@ -26,7 +27,6 @@ module.exports = {
                     .setColor(config.embedColor)
                     .addField("Commands", commandNames, true)
                     .addField("Enabled", commandEnabled, true)
-                    .addField("Description", commandDescriptions, true)
                     .setDescription(`
                     > **Settings Commands**
                     > ${prefix}settings enable [Command]
@@ -95,10 +95,19 @@ module.exports = {
                         }
                     } break;
                     case "prefix": {
+                        if (!args[1]) {
+                            let embed = new Discord.MessageEmbed()
+                                .setTitle("Usage")
+                                .setDescription(`${prefix.value}settings prefix [String]`)
+                                .setColor(config.embedColor);
+                            message.channel.send(embed);
+                            return;
+                        }
                         for (element in config) {
                             if (element == "prefix") {
                                 prefix.value = args[1];
                                 config[element] = args[1];
+                                message.client.guilds.cache.first().member(message.client.user.id).setNickname(`[${prefix.value}] ${message.client.guilds.cache.first().member(message.client.user.id).displayName.split(" ")[1]}`);
                                 changed = true;
                                 if (changed) {
                                     let embed = new Discord.MessageEmbed()
