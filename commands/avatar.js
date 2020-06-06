@@ -5,9 +5,9 @@ const config = require("../config.json")
 module.exports = {
     name: 'Avatar',
     enabled: true,
-    
+    category: "Miscellaneous",
     aliases: ['Av', 'avatar', 'AV', 'Avatar', 'av'],
-    description: 'Avatar [user]',
+    description: 'Displays avatar of specified user',
     execute(message, args) {
         try {
             if (message.mentions.roles.first() && args.length) {
