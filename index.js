@@ -1,6 +1,7 @@
 const fs = require("fs");
 const Discord = require('discord.js');
 const mineflayer = require('mineflayer');
+const { monthsShort } = require("moment");
 const tpsPlugin = require('mineflayer-tps')(mineflayer)
 let config = JSON.parse(fs.readFileSync('./config.json'))
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -9,7 +10,7 @@ client.commands = new Discord.Collection();
 
 var prefix = { value: config.prefix };
 let chatData = [];
-let saving = { bool: false };
+let saving = { chat: false, hover: false };
 let regex = { regex: new RegExp() };
 
 for (const file of commandFiles) {
@@ -23,34 +24,16 @@ let options = {
     username: config.email,
     password: config.password
 };
-
-var bot = mineflayer.createBot(options);
-
-bot.loadPlugin(tpsPlugin);
+var bot = { client: mineflayer.createBot(options) };
+bot.client.loadPlugin(tpsPlugin);
+bindEvents(bot);
 
 client.on("ready", async => {
-    client.guilds.cache.first().member(client.user.id).setNickname(`[${prefix.value}] ${client.guilds.cache.first().member(client.user.id).displayName.split(" ")[1]}`);
     console.log("Logged in as " + client.user.tag);
 });
-bot.on("login", async => {
-    console.log("Logged onto the server as " + bot.username);
-    bot.chat(config.realmCommand);
-});
 
-bot.on("Kicked", async => {
-    bot = mineflayer.createBot(options);
-})
+client.on('message', message => {
 
-bot.on("message", msg => {
-    console.log(`${msg}`);
-    let parsedMsg = `${msg}`;
-    if (parsedMsg.match(regex.regex) && !parsedMsg.includes("(!) Vanity") && saving.bool === true) {
-        chatData.push(`${msg}`);
-    }
-});
-
-client.on('message', message => {  
-    
     if (!message.content.startsWith(prefix.value) || message.author.bot) return;
 
     const args = message.content.slice(prefix.value.length).split(/ +/);
@@ -67,12 +50,10 @@ client.on('message', message => {
 
     try {
         if (command.enabled == true && command.name != "settings") {
-            command.execute(message, args, bot, chatData, saving, regex);
-            message.delete();
+            command.execute(message, args, bot.client, chatData, saving, regex);
         }
-        else if (command.name == "settings"){
+        else if (command.name == "settings") {
             command.execute(message, args, prefix)
-            message.delete();
         }
     } catch (err) {
         message.channel.send(`\`\`\`${err}\`\`\``).then(msg => {
@@ -82,3 +63,44 @@ client.on('message', message => {
 });
 
 client.login(config.token).catch(console.error);
+
+function bindEvents(bot) {
+    bot.client.on('login', function () {
+        console.log("Logged onto the server as " + bot.client.username);
+        bot.client.chat(config.realmCommand);
+    });
+
+    bot.client.on("error", error => {
+        if (`${error}`.includes("Invalid credentials")){
+            console.log("Invalid Session/Credentials, attempting to relog");
+            setTimeout(() => {
+                bot.client = mineflayer.createBot(options);
+                bot.client.loadPlugin(tpsPlugin);
+                bindEvents(bot);
+            }, 5000);
+        }
+    })
+    bot.client.on('kicked', reason => {
+        console.log("Kicked for: " + reason.text);
+        console.log("Attempting to relog");
+        setTimeout(() => {
+            bot.client = mineflayer.createBot(options);
+            bot.client.loadPlugin(tpsPlugin);
+            bindEvents(bot);
+        }, 5000);
+    });
+    bot.client.on("message", msg => {
+        if (`${msg}`.toLowerCase().match(regex.regex) && saving.hover === true){
+            chatData.push(`${msg}`);
+            chatData.push(msg.hoverEvent.value);
+            
+        }
+        
+        let parsedMsg = `${msg}`;
+        console.log(parsedMsg);
+        if (parsedMsg.match(regex.regex) && !parsedMsg.includes("(!) Vanity") && saving.chat === true) {
+            chatData.push(`${msg}`);
+        }
+    });
+    
+}

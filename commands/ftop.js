@@ -7,28 +7,23 @@ module.exports = {
     description: 'Displays Faction Top Ranking',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.ftop,
     execute(message, args, bot, chatData, saving, regex) {
-        try {
-            
-            saving.bool = true;
-            regex.regex = /^[1-9#]/i;
 
-            bot.chat(config.FtopCommand);
+        saving.chat = true;
+        regex.regex = /^[1-9#]/i;
 
-            setTimeout(() => {
-                saving.bool = false;
-                if (!chatData.length) {
-                    chatData[0] = "Try Again";
-                }
-                let embedFtop = new Discord.MessageEmbed()
-                    .setTitle("Faction Top")
-                    .setColor(config.embedColor)
-                    .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
-                message.channel.send(embedFtop);
-                chatData.length = 0;
-            }, 250);
+        bot.chat(config.FtopCommand);
 
-        } catch (error) {
-            console.log(error);
-        }
+        setTimeout(() => {
+            saving.chat = false;
+            if (!chatData.length) {
+                chatData[0] = "Try Again";
+            }
+            let embedFtop = new Discord.MessageEmbed()
+                .setTitle("Faction Top")
+                .setColor(config.embedColor)
+                .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
+            message.channel.send(embedFtop);
+            chatData.length = 0;
+        }, 250);
     },
 }

@@ -7,27 +7,23 @@ module.exports = {
     description: 'Displays information about KOTH',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.koth,
     execute(message, args, bot, chatData, saving, regex) {
-        try {
-            
-            saving.bool = true;
-            regex.regex = /\bkoth\b/i;
 
-            bot.chat(`/koth`)
+        saving.chat = true;
+        regex.regex = /\bkoth\b/i;
 
-            setTimeout(() => {
-                saving.bool = false
-                if (!chatData.length) {
-                    chatData[0] = "Try Again";
-                }
-                let embedKoth = new Discord.MessageEmbed()
-                    .setTitle("Koth Information")
-                    .setColor(config.embedColor)
-                    .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
-                message.channel.send(embedKoth);
-                chatData.length = 0;
-            }, 500);
-        } catch (error) {
-            console.log(error);
-        }
+        bot.chat(`/koth`)
+
+        setTimeout(() => {
+            saving.chat = false
+            if (!chatData.length) {
+                chatData[0] = "Try Again";
+            }
+            let embedKoth = new Discord.MessageEmbed()
+                .setTitle("Koth Information")
+                .setColor(config.embedColor)
+                .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
+            message.channel.send(embedKoth);
+            chatData.length = 0;
+        }, 500);
     },
 }

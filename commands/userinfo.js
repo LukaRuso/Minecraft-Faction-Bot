@@ -9,62 +9,52 @@ module.exports = {
     aliases: ['userinfo', 'user', 'Userinfo', 'whois'],
     description: 'Displays information about specified user',
     execute(message, args) {
-        try {
-            let User;
+        let User;
 
-            if (!args.length) {
-                User = message.guild.member(message.author.id);
-            }
-            else {
-                User = message.mentions.members.first();
-            }
+        if (!args.length) {
+            User = message.guild.member(message.author.id);
+        }
+        else {
+            User = message.mentions.members.first();
+        }
 
-            User = User.user;
+        User = User.user;
 
-            if (!User.bot) {
+        if (!User.bot) {
 
-                let created = User.createdAt;
-                let joined = message.guild.member(User.id).joinedAt;
-                let crDate = `${created.getDate()}-${created.getMonth() + 1}-${created.getFullYear()}-${created.getHours()}-${created.getMinutes()}`;
-                let jnDate = `${joined.getDate()}-${joined.getMonth() + 1}-${joined.getFullYear()}-${joined.getHours()}-${joined.getMinutes()}`;
+            let created = User.createdAt;
+            let joined = message.guild.member(User.id).joinedAt;
+            let crDate = `${created.getDate()}-${created.getMonth() + 1}-${created.getFullYear()}-${created.getHours()}-${created.getMinutes()}`;
+            let jnDate = `${joined.getDate()}-${joined.getMonth() + 1}-${joined.getFullYear()}-${joined.getHours()}-${joined.getMinutes()}`;
 
-                let createdDate = `${moment(crDate, `DD-MM-YYYY-h:mm`).utcOffset('+0000')
-                    .format('MMM Do, YYYY, h:mm a')}`
-                    .concat(` (${moment(crDate, `DD-MM-YYYY-h:mm`)
-                        .diff(moment(), 'years') * - 1} Years Ago)`);
+            let createdDate = `${moment(crDate, `DD-MM-YYYY-h:mm`).utcOffset('+0000')
+                .format('MMM Do, YYYY, h:mm a')}`
+                .concat(` (${moment(crDate, `DD-MM-YYYY-h:mm`)
+                    .diff(moment(), 'years') * - 1} Years Ago)`);
 
-                let joinedDate = moment(jnDate, `DD-MM-YYYY-h-mm`)
-                    .utcOffset('+0000').format('MMM Do, YYYY, h:mm a')
-                    .concat(` (${moment(jnDate, `DD-MM-YYYY-h:mm`)
-                        .diff(moment(), 'Months') * - 1} Months Ago)`);
+            let joinedDate = moment(jnDate, `DD-MM-YYYY-h-mm`)
+                .utcOffset('+0000').format('MMM Do, YYYY, h:mm a')
+                .concat(` (${moment(jnDate, `DD-MM-YYYY-h:mm`)
+                    .diff(moment(), 'Months') * - 1} Months Ago)`);
 
-                let userRoles = "";
-                let roles = message.guild.member(User).roles.cache;
-                roles.forEach(element => {
-                    if (element.name == "@everyone") {
-                        roles.delete(element.id);
-                    }
-                });
+            let userRoles = "";
+            let roles = message.guild.member(User).roles.cache;
+            roles.forEach(element => {
+                if (element.name == "@everyone") {
+                    roles.delete(element.id);
+                }
+            });
 
 
-                let embed = new Discord.MessageEmbed()
-                    .setColor(config.embedColor)
-                    .setAuthor(User.username + "#" + User.discriminator, User.displayAvatarURL())
-                    .setDescription(`**Created:** ${createdDate}
+            let embed = new Discord.MessageEmbed()
+                .setColor(config.embedColor)
+                .setAuthor(User.username + "#" + User.discriminator, User.displayAvatarURL())
+                .setDescription(`**Created:** ${createdDate}
                 **Joined:** ${joinedDate}
                 
                 **Roles (${roles.size}):** 
                 ${roles.map(role => `<@&${role.id}>`).join(", ")}`);
-                message.channel.send(embed);
-            }
-
-
-
-        } catch (error) {
-            console.log('\x1b[31m%s\x1b[0m', error.message)
-            message.channel.send(`\`\`\`${error}\`\`\``).then(msg => {
-                msg.delete({timeout: 5000})
-            });
+            message.channel.send(embed);
         }
     },
 }

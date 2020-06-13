@@ -8,28 +8,23 @@ module.exports = {
     description: 'Shows information about upcoming rare drop',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.raredrop,
     execute(message, args, bot, chatData, saving, regex) {
-        try {
-            
-            saving.bool = true;
-            regex.regex = /\bdrop\b|\blocation\b|\btype\b/i;
 
-            bot.chat("/td");
+        saving.chat = true;
+        regex.regex = /\bdrop\b|\blocation\b|\btype\b/i;
 
-            setTimeout(() => {
-                saving.bool = false;
-                if (!chatData.length) {
-                    chatData[0] = "Try Again";
-                }
-                let embedRaredrop = new Discord.MessageEmbed()
-                    .setTitle("Rare Drop Information")
-                    .setColor(config.embedColor)
-                    .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
-                message.channel.send(embedRaredrop);
-                chatData.length = 0;
-            }, 250);
+        bot.chat("/td");
 
-        } catch (error) {
-            console.log(error);
-        }
+        setTimeout(() => {
+            saving.chat = false;
+            if (!chatData.length) {
+                chatData[0] = "Try Again";
+            }
+            let embedRaredrop = new Discord.MessageEmbed()
+                .setTitle("Rare Drop Information")
+                .setColor(config.embedColor)
+                .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
+            message.channel.send(embedRaredrop);
+            chatData.length = 0;
+        }, 250);
     },
 }

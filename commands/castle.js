@@ -7,28 +7,24 @@ module.exports = {
     description: 'Displays information about Castle',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.castle,
     execute(message, args, bot, chatData, saving, regex) {
-        try {
-            
-            saving.bool = true;
-            regex.regex = /^\bCastle\b|^\bControlled\b/i;
 
-            bot.chat(`/castle`)
+        saving.chat = true;
+        regex.regex = /^\bCastle\b|^\bControlled\b/i;
 
-            setTimeout(() => {
-                saving.bool = false;
-                if (!chatData.length) {
-                    chatData[0] = "Try Again";
-                }
-                let embedCastle = new Discord.MessageEmbed()
-                    .setTitle("Castle Information")
-                    .setColor(config.embedColor)
-                    .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
-                message.channel.send(embedCastle);
-                chatData.length = 0;
+        bot.chat(`/castle`)
 
-            }, 500);
-        } catch (error) {
-            console.log(error);
-        }
+        setTimeout(() => {
+            saving.bool = false;
+            if (!chatData.length) {
+                chatData[0] = "Try Again";
+            }
+            let embedCastle = new Discord.MessageEmbed()
+                .setTitle("Castle Information")
+                .setColor(config.embedColor)
+                .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
+            message.channel.send(embedCastle);
+            chatData.length = 0;
+
+        }, 500);
     },
 }

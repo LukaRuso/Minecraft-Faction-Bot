@@ -8,28 +8,24 @@ module.exports = {
     description: 'Displays information about Raiding Outpost',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.rpost,
     execute(message, args, bot, chatData, saving, regex) {
-        try {
-            
-            saving.bool = true;
-            regex.regex = /\braiding outpost\b/i;
 
-            bot.chat(`/rpost`)
+        saving.chat = true;
+        regex.regex = /\braiding outpost\b/i;
 
-            setTimeout(() => {
-                saving.bool = false;
-                if (!chatData.length) {
-                    chatData[0] = "Try Again";
-                }
-                let embedRpost = new Discord.MessageEmbed()
-                    .setTitle("Raiding Outpost Information")
-                    .setColor(config.embedColor)
-                    .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
-                message.channel.send(embedRpost);
-                chatData.length = 0;
+        bot.chat(`/rpost`)
 
-            }, 500);
-        } catch (error) {
-            console.log(error);
-        }
+        setTimeout(() => {
+            saving.chat = false;
+            if (!chatData.length) {
+                chatData[0] = "Try Again";
+            }
+            let embedRpost = new Discord.MessageEmbed()
+                .setTitle("Raiding Outpost Information")
+                .setColor(config.embedColor)
+                .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
+            message.channel.send(embedRpost);
+            chatData.length = 0;
+
+        }, 500);
     },
 }
