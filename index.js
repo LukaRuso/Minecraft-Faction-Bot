@@ -9,7 +9,7 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
 var prefix = { value: config.prefix };
-let chatData = [];
+let chatData = { chat: [], hover: [] };
 let saving = { chat: false, hover: false };
 let regex = { regex: new RegExp() };
 
@@ -71,36 +71,37 @@ function bindEvents(bot) {
     });
 
     bot.client.on("error", error => {
-        if (`${error}`.includes("Invalid credentials")){
+        if (`${error}`.includes("Invalid credentials")) {
             console.log("Invalid Session/Credentials, attempting to relog");
             setTimeout(() => {
+                bot.client.end();
                 bot.client = mineflayer.createBot(options);
                 bot.client.loadPlugin(tpsPlugin);
                 bindEvents(bot);
-            }, 5000);
+            }, 30000);
         }
     })
     bot.client.on('kicked', reason => {
         console.log("Kicked for: " + reason.text);
         console.log("Attempting to relog");
         setTimeout(() => {
+            bot.client.end();
             bot.client = mineflayer.createBot(options);
             bot.client.loadPlugin(tpsPlugin);
             bindEvents(bot);
-        }, 5000);
+        }, 30000);
     });
     bot.client.on("message", msg => {
-        if (`${msg}`.toLowerCase().match(regex.regex) && saving.hover === true){
-            chatData.push(`${msg}`);
-            chatData.push(msg.hoverEvent.value);
-            
-        }
-        
         let parsedMsg = `${msg}`;
+        if (parsedMsg.toLowerCase().match(regex.regex) && saving.hover === true && msg.hoverEvent.value) {
+            chatData.chat.push(parsedMsg);
+            chatData.hover.push(msg.hoverEvent.value)
+        }
+
         console.log(parsedMsg);
         if (parsedMsg.match(regex.regex) && !parsedMsg.includes("(!) Vanity") && saving.chat === true) {
-            chatData.push(`${msg}`);
+            chatData.chat.push(`${msg}`);
         }
     });
-    
+
 }

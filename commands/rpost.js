@@ -16,15 +16,16 @@ module.exports = {
 
         setTimeout(() => {
             saving.chat = false;
-            if (!chatData.length) {
-                chatData[0] = "Try Again";
+            if (!chatData.chat.length) {
+                chatData.chat[0] = "Try Again";
             }
             let embedRpost = new Discord.MessageEmbed()
                 .setTitle("Raiding Outpost Information")
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
+                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
             message.channel.send(embedRpost);
-            chatData.length = 0;
+            chatData.chat.length = 0;
+            
 
         }, 500);
     },

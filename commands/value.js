@@ -10,8 +10,10 @@ module.exports = {
     description: 'Shows the value of specified faction',
     enabled: true,
     execute(message, args, bot, chatData, saving, regex) {
+
         regex.regex = args[0].toLowerCase();
         saving.hover = true;
+        
         bot.chat("/f top");
         bot.chat("/f top 2");
         bot.chat("/f top 3");

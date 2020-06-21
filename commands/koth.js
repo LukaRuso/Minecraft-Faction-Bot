@@ -15,15 +15,15 @@ module.exports = {
 
         setTimeout(() => {
             saving.chat = false
-            if (!chatData.length) {
-                chatData[0] = "Try Again";
+            if (!chatData.chat.length) {
+                chatData.chat[0] = "Try Again";
             }
             let embedKoth = new Discord.MessageEmbed()
                 .setTitle("Koth Information")
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
+                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
             message.channel.send(embedKoth);
-            chatData.length = 0;
+            chatData.chat.length = 0;
         }, 500);
     },
 }

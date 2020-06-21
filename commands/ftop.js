@@ -8,22 +8,56 @@ module.exports = {
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.ftop,
     execute(message, args, bot, chatData, saving, regex) {
 
-        saving.chat = true;
-        regex.regex = /^[1-9#]/i;
-
-        bot.chat(config.FtopCommand);
+        var empty = false;
+        saving.hover = true;
+        regex.regex = /^[1-9#]|(Invalid, page must be between)/i;
+        if (!args.length) {
+            args[0] = "";
+        }
+        bot.chat(config.FtopCommand + " " + args[0]);
 
         setTimeout(() => {
-            saving.chat = false;
-            if (!chatData.length) {
-                chatData[0] = "Try Again";
+            saving.hover = false;
+            if (!chatData.chat.length) {
+                chatData.chat[0] = "Try Again";
+                empty = true;
             }
+            if (empty) {
+                empty = false;
+                let embedSudo = new Discord.MessageEmbed()
+                    .setColor(config.embedColor)
+                    .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
+                message.channel.send(embedSudo);
+                chatData.chat.length = 0;
+                return;
+            }
+
+            let numeration = []
+            let factionNames = [];
+            let currentWorth = [];
+            let potentialWorth = [];
+
+            chatData.hover = chatData.hover.toString().split("\n");
+            chatData.hover.forEach(element => {
+                if (element.match(/(Potential Worth:)/)) {
+                    potentialWorth.push(element.split(" ")[2].replace("§d", ""));
+                }
+            });
+            chatData.chat.forEach(element => {
+                let split = element.split(" ");
+                factionNames.push(split[0] + " " + split[1]);
+                currentWorth.push(split[2]);
+            });
+
             let embedFtop = new Discord.MessageEmbed()
                 .setTitle("Faction Top")
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
+                .addField("Factions", factionNames, true)
+                .addField("Current Worth", currentWorth, true)
+                .addField("Potential Worth", potentialWorth, true)
             message.channel.send(embedFtop);
-            chatData.length = 0;
+            chatData.chat.length = 0;
+            chatData.hover.length = 0
         }, 250);
     },
 }

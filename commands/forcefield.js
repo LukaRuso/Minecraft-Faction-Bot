@@ -18,15 +18,15 @@ module.exports = {
         
         setTimeout(() => {
             saving.hover = false;
-            if (!chatData.length) {
-                chatData[0] = "Try Again";
+            if (!chatData.chat.length) {
+                chatData.chat[0] = "Try Again";
             }
             let embedFshield = new Discord.MessageEmbed()
                 .setTitle("Forcefield")
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.join("\n").replace(/(§c)|(§f)|(§l)|(§e)/g, "")}\`\`\``);
+                .setDescription(`\`\`\`${chatData.chat.join("\n").replace(/(§c)|(§f)|(§l)|(§e)/g, "")}\`\`\``);
             message.channel.send(embedFshield);
-            chatData.length = 0;
+            chatData.chat.length = 0;
         }, 500);
     },
 }

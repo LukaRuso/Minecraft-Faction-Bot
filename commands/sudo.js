@@ -8,19 +8,19 @@ module.exports = {
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.sudo,
     execute(message, args, bot, chatData, saving, regex) {
 
-        sending.chat = true;
+        saving.chat = true;
         bot.chat(args.join(" "));
 
         setTimeout(() => {
-            sending.chat = false;
+            saving.chat = false;
             if (!chatData.length) {
                 chatData[0] = "Try Again";
             }
             let embedSudo = new Discord.MessageEmbed()
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
+                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
             message.channel.send(embedSudo);
-            chatData.length = 0;
+            chatData.chat.length = 0;
         }, 500);
     },
 }

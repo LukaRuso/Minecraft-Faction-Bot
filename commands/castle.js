@@ -15,15 +15,15 @@ module.exports = {
 
         setTimeout(() => {
             saving.bool = false;
-            if (!chatData.length) {
-                chatData[0] = "Try Again";
+            if (!chatData.chat.length) {
+                chatData.chat[0] = "Try Again";
             }
             let embedCastle = new Discord.MessageEmbed()
                 .setTitle("Castle Information")
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.join('\n')}\`\`\``);
+                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
             message.channel.send(embedCastle);
-            chatData.length = 0;
+            chatData.chat.length = 0;
 
         }, 500);
     },
