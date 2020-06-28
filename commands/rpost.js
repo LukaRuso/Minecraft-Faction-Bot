@@ -24,6 +24,7 @@ module.exports = {
                 .setColor(config.embedColor)
                 .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
             message.channel.send(embedRpost);
+            chatData.hover.length = 0;
             chatData.chat.length = 0;
             
 

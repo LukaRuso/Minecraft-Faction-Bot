@@ -8,6 +8,7 @@ module.exports = {
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.sudo,
     execute(message, args, bot, chatData, saving, regex) {
 
+        regex.regex = /.*/;
         saving.chat = true;
         bot.chat(args.join(" "));
 
@@ -21,6 +22,6 @@ module.exports = {
                 .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
             message.channel.send(embedSudo);
             chatData.chat.length = 0;
-        }, 500);
+        }, 750);
     },
 }

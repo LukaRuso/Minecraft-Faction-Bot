@@ -24,8 +24,9 @@ module.exports = {
             let embedFshield = new Discord.MessageEmbed()
                 .setTitle("Forcefield")
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.chat.join("\n").replace(/(§c)|(§f)|(§l)|(§e)/g, "")}\`\`\``);
+                .setDescription(`\`\`\`${chatData.hover.join("\n").replace(/(§c)|(§f)|(§l)|(§e)/g, "")}\`\`\``);
             message.channel.send(embedFshield);
+            chatData.hover.length = 0;
             chatData.chat.length = 0;
         }, 500);
     },

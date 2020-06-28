@@ -11,10 +11,10 @@ module.exports = {
     description: 'Shows current TPS of the server',
     enabled: JSON.parse(fs.readFileSync('./config.json')).enableCommands.tps,
     execute(message, args, bot) {
-        let embedFshow = new Discord.MessageEmbed()
+        let embedTPS = new Discord.MessageEmbed()
             .setTitle("Current TPS")
             .setColor(config.embedColor)
             .setDescription(`\`\`\`${bot.getTps()}\`\`\``);
-        message.channel.send(embedFshow);
+        message.channel.send(embedTPS);
     },
 }

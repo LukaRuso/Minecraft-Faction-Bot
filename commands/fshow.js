@@ -24,6 +24,7 @@ module.exports = {
                 .setColor(config.embedColor)
                 .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
             message.channel.send(embedFshow);
+            chatData.hover.length = 0;
             chatData.chat.length = 0;
 
         }, 750);

@@ -32,9 +32,10 @@ module.exports = {
             let embedFshield = new Discord.MessageEmbed()
                 .setTitle("Value")
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.join("\n").replace(/(§c)|(§f)|(§l)|(§e)|(§7)|(§o)|(§r)|(§d)/g, "")}\`\`\``);
+                .setDescription(`\`\`\`${chatData.hover.join("\n").replace(/(§c)|(§f)|(§l)|(§e)|(§7)|(§o)|(§r)|(§d)/g, "")}\`\`\``);
             message.channel.send(embedFshield);
-            chatData.length = 0;
+            chatData.hover.length = 0;
+            chatData.chat.length = 0;
         }, 500);
     },
 }

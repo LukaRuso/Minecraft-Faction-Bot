@@ -2,6 +2,7 @@ const fs = require("fs");
 const Discord = require('discord.js');
 const mineflayer = require('mineflayer');
 const { monthsShort } = require("moment");
+const { builtinModules } = require("module");
 const tpsPlugin = require('mineflayer-tps')(mineflayer)
 let config = JSON.parse(fs.readFileSync('./config.json'))
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -26,12 +27,10 @@ let options = {
 };
 var bot = { client: mineflayer.createBot(options) };
 bot.client.loadPlugin(tpsPlugin);
-bindEvents(bot);
 
 client.on("ready", async => {
     console.log("Logged in as " + client.user.tag);
 });
-
 client.on('message', message => {
 
     if (!message.content.startsWith(prefix.value) || message.author.bot) return;
@@ -64,7 +63,6 @@ client.on('message', message => {
 
 client.login(config.token).catch(console.error);
 
-function bindEvents(bot) {
     bot.client.on('login', function () {
         console.log("Logged onto the server as " + bot.client.username);
         bot.client.chat(config.realmCommand);
@@ -74,21 +72,22 @@ function bindEvents(bot) {
         if (`${error}`.includes("Invalid credentials")) {
             console.log("Invalid Session/Credentials, attempting to relog");
             setTimeout(() => {
-                bot.client.end();
-                bot.client = mineflayer.createBot(options);
-                bot.client.loadPlugin(tpsPlugin);
-                bindEvents(bot);
+                process.exit();
             }, 30000);
         }
     })
+    bot.client.on("end", () => {
+        console.log("Connection Ended");
+        setTimeout(() => {
+            process.exit();
+        }, 30000);
+    })
+    
     bot.client.on('kicked', reason => {
         console.log("Kicked for: " + reason.text);
         console.log("Attempting to relog");
         setTimeout(() => {
-            bot.client.end();
-            bot.client = mineflayer.createBot(options);
-            bot.client.loadPlugin(tpsPlugin);
-            bindEvents(bot);
+            process.exit();
         }, 30000);
     });
     bot.client.on("message", msg => {
@@ -104,4 +103,3 @@ function bindEvents(bot) {
         }
     });
 
-}
