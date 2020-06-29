@@ -12,7 +12,7 @@ module.exports = {
         saving.chat = true;
         regex.regex = /\braiding outpost\b/i;
 
-        bot.chat(`/rpost`)
+        bot.client.chat(`/rpost`)
 
         setTimeout(() => {
             saving.chat = false;
@@ -22,11 +22,13 @@ module.exports = {
             let embedRpost = new Discord.MessageEmbed()
                 .setTitle("Raiding Outpost Information")
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
+                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``)
+                .setTimestamp(new Date())
+                .setFooter(`${config.serverIP}`);
             message.channel.send(embedRpost);
             chatData.hover.length = 0;
             chatData.chat.length = 0;
-            
+
 
         }, 500);
     },

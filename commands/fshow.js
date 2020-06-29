@@ -13,7 +13,7 @@ module.exports = {
         regex.regex = /[:|*+,-]|\bnone\b|(\_)\1+/i;
 
         if (!args.length) args[0] = "";
-        bot.chat(`/f show ${args[0]}`)
+        bot.client.chat(`/f show ${args[0]}`)
 
         setTimeout(() => {
             saving.chat = false;
@@ -22,7 +22,9 @@ module.exports = {
             }
             let embedFshow = new Discord.MessageEmbed()
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
+                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``)
+                .setTimestamp(new Date())
+                .setFooter(`${config.serverIP}`);
             message.channel.send(embedFshow);
             chatData.hover.length = 0;
             chatData.chat.length = 0;

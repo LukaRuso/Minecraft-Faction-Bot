@@ -14,7 +14,9 @@ module.exports = {
         let embedTPS = new Discord.MessageEmbed()
             .setTitle("Current TPS")
             .setColor(config.embedColor)
-            .setDescription(`\`\`\`${bot.getTps()}\`\`\``);
+            .setDescription(`> **${bot.client.getTps()}**`)
+            .setTimestamp(new Date())
+            .setFooter(`${config.serverIP}`);
         message.channel.send(embedTPS);
     },
 }

@@ -11,7 +11,7 @@ module.exports = {
         saving.chat = true;
         regex.regex = /\bfactionless\b|\bonline\b/i;
 
-        bot.chat("/f list");
+        bot.client.chat("/f list");
 
         setTimeout(() => {
             saving.bool = false;
@@ -21,7 +21,9 @@ module.exports = {
             let embedFlist = new Discord.MessageEmbed()
                 .setTitle("Faction list")
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
+                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``)
+                .setTimestamp(new Date())
+                .setFooter(`${config.serverIP}`);
             message.channel.send(embedFlist);
             chatData.hover.length = 0;
             chatData.chat.length = 0;

@@ -12,7 +12,7 @@ module.exports = {
         saving.chat = true;
         regex.regex = /\bdrop\b|\blocation\b|\btype\b/i;
 
-        bot.chat("/td");
+        bot.client.chat("/td");
 
         setTimeout(() => {
             saving.chat = false;
@@ -22,7 +22,9 @@ module.exports = {
             let embedRaredrop = new Discord.MessageEmbed()
                 .setTitle("Rare Drop Information")
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
+                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``)
+                .setTimestamp(new Date())
+                .setFooter(`${config.serverIP}`);
             message.channel.send(embedRaredrop);
             chatData.hover.length = 0;
             chatData.chat.length = 0;

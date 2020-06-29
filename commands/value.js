@@ -14,13 +14,13 @@ module.exports = {
         regex.regex = args[0].toLowerCase();
         saving.hover = true;
         
-        bot.chat("/f top");
-        bot.chat("/f top 2");
-        bot.chat("/f top 3");
-        bot.chat("/f top 4");
-        bot.chat("/f top 5");
-        bot.chat("/f top 6");
-        bot.chat("/f top 7");
+        bot.client.chat("/f top");
+        bot.client.chat("/f top 2");
+        bot.client.chat("/f top 3");
+        bot.client.chat("/f top 4");
+        bot.client.chat("/f top 5");
+        bot.client.chat("/f top 6");
+        bot.client.chat("/f top 7");
         
 
         
@@ -30,9 +30,11 @@ module.exports = {
                 chatData[0] = "No Value";
             }
             let embedFshield = new Discord.MessageEmbed()
-                .setTitle("Value")
+                .setTitle("Value " + "- " + args[0].substring(0,1).toUpperCase()+args[0].substring(1))
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.hover.join("\n").replace(/(§c)|(§f)|(§l)|(§e)|(§7)|(§o)|(§r)|(§d)/g, "")}\`\`\``);
+                .setDescription(`\`\`\`${chatData.hover.join("\n").replace(/(§c)|(§f)|(§l)|(§e)|(§7)|(§o)|(§r)|(§d)/g, "")}\`\`\``)
+                .setTimestamp(new Date())
+                .setFooter(`${config.serverIP}`);
             message.channel.send(embedFshield);
             chatData.hover.length = 0;
             chatData.chat.length = 0;

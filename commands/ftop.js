@@ -14,7 +14,7 @@ module.exports = {
         if (!args.length) {
             args[0] = "";
         }
-        bot.chat(config.FtopCommand + " " + args[0]);
+        bot.client.chat(config.FtopCommand + " " + args[0]);
 
         setTimeout(() => {
             saving.hover = false;
@@ -55,6 +55,8 @@ module.exports = {
                 .addField("Factions", factionNames, true)
                 .addField("Current Worth", currentWorth, true)
                 .addField("Potential Worth", potentialWorth, true)
+                .setTimestamp(new Date())
+                .setFooter(`${config.serverIP}`);
             message.channel.send(embedFtop);
             chatData.chat.length = 0;
             chatData.hover.length = 0

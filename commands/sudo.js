@@ -19,7 +19,9 @@ module.exports = {
             }
             let embedSudo = new Discord.MessageEmbed()
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
+                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``)
+                .setTimestamp(new Date())
+                .setFooter(`${config.serverIP}`);
             message.channel.send(embedSudo);
             chatData.chat.length = 0;
         }, 750);

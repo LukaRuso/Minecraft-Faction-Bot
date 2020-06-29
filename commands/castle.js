@@ -11,7 +11,7 @@ module.exports = {
         saving.chat = true;
         regex.regex = /^\bCastle\b|^\bControlled\b/i;
 
-        bot.chat(`/castle`)
+        bot.client.chat(`/castle`)
 
         setTimeout(() => {
             saving.bool = false;
@@ -21,7 +21,9 @@ module.exports = {
             let embedCastle = new Discord.MessageEmbed()
                 .setTitle("Castle Information")
                 .setColor(config.embedColor)
-                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``);
+                .setDescription(`\`\`\`${chatData.chat.join('\n')}\`\`\``)
+                .setTimestamp(new Date())
+                .setFooter(`${config.serverIP}`);
             message.channel.send(embedCastle);
             chatData.hover.length = 0;
             chatData.chat.length = 0;
